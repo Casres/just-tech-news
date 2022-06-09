@@ -50,14 +50,15 @@ User.init(
     // don't automatically create 'createAt/updateAt' timestamp fields
     timestamps: false,
 
-    // don't pluralize name of database table
-    freeTableName: false,
+    // 'false' pluralizes the name of database table
+    // 'true' doesn't
+    freeTableName: true,
 
     // use underscores instead of camel-casing
     underscored: true,
 
     // make it so our model name stays lowercase in the database
-    modelName: "user",
+    modelName: "users",
   }
 );
 
