@@ -1,8 +1,8 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-
+// piggy-backs off of the model table set up/layout
 class Post extends Model{}
-
+// the layout of the post table
 Post.init(
   {
     id: {
