@@ -62,4 +62,4 @@ User.init(
 );
 
 module.exports = User;
-// all this is what needs to be set in  
+// all this is what needs to be set in 

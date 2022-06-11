@@ -93,3 +93,4 @@ router.delete("/:id", (req, res) => {
 
 module.exports = router;
 //  hello 
+// all this is what needs to be set in 

@@ -16,3 +16,4 @@ module.exports = sequelize;
 
 // REMEMBER, sequelize is a middle man for 
 // JavaScript and ANY SQL dialect, which in this case is MySQL  
+// all this is what needs to be set in 

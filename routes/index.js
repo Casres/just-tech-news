@@ -9,3 +9,4 @@ router.use((req, res) => {
 });
 
 module.exports = router; 
+// all this is what needs to be set in 
