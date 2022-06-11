@@ -10,6 +10,9 @@ Vote.init(
             primaryKey: true,
             autoIncrement: true
         },
+        {
+            
+        }
         // other records (rows)
     },
     {
