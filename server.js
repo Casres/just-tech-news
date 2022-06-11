@@ -14,4 +14,4 @@ app.use(routes);
 // turns on connection to DB and Server
 sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => console.log(`SERVER ONLINE, now listening to port ${PORT}` ));
-});
+}); 
