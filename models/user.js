@@ -84,7 +84,3 @@ User.init(
 );
 
 module.exports = User;
-<<<<<<< HEAD
-// all this is what needs to be set in
-=======
->>>>>>> feature/password

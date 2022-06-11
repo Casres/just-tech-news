@@ -116,9 +116,4 @@ router.delete("/:id", (req, res) => {
 });
 
 module.exports = router;
-<<<<<<< HEAD
-//  hello 
-// all this is what needs to be set in 
-=======
 //  hello
->>>>>>> feature/password
