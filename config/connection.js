@@ -15,4 +15,4 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 module.exports = sequelize; 
 
 // REMEMBER, sequelize is a middle man for 
-// JavaScript and ANY SQL dialect, which in this case is MySQL 
+// JavaScript and ANY SQL dialect, which in this case is MySQL  
