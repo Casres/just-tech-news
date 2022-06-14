@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User } = require("../../models");
+const { User, Post, Vote } = require("../../models");
 
 // GETs /api/users
 router.get("/", (req, res) => {
@@ -20,6 +20,20 @@ router.get("/:id", (req, res) => {
     where: {
       id: req.params.id,
     },
+    include: [
+      // gives your the posts from user
+      {
+        model: Post,
+        attributes: ['id', 'title', 'post_url', 'created_at']
+      },
+      // gives you the voted posts
+      {
+        model: Post,
+        attributes: ['title'],
+        through: Vote,
+        as: 'voted_posts'
+      }
+    ]
   })
     .then((dbUserData) => {
       if (!dbUserData) {
@@ -34,27 +48,26 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// POSTs/logs-in /api/users
-router.post('/login', (req, res) => {
-  // expects {email: 'lernantino@gmail.com', password: 'password1234'}
+// POSTs /api/users
+router.post("/login", (req, res) => {
   User.findOne({
     where: {
-      email: req.body.email
-    }
-  }).then(dbUserData => {
+      email: req.body.email,
+    },
+  }).then((dbUserData) => {
     if (!dbUserData) {
-      res.status(400).json({ message: 'No user with that email address!' });
+      res.status(400).json({ message: "Email not found, please try again" });
       return;
     }
-
-    const validPassword = dbUserData.checkPassword(req.body.password);
-
-    // if (!validPassword) {
-    //   res.status(400).json({ message: 'Incorrect password!' });
-    //   return;
-    // }
-
-    res.json({ user: dbUserData, message: 'You are now logged in!' });
+    const validatePassword = dbUserData.checkPassword(req.body.password);
+    if (!validatePassword) {
+      res.status(400).json({ message: "Incorrect password" });
+      return;
+    }
+    res.json({
+      user: dbUserData,
+      message: "Logged In",
+    });
   });
 });
 
@@ -72,7 +85,7 @@ router.post("/", (req, res) => {
     });
 });
 
-// PUT/updates /api/users/1
+// PUT /api/users/1
 router.put("/:id", (req, res) => {
   User.update(req.body, {
     individualHooks: true,

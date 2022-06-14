@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 // creates the user model
 class User extends Model {
@@ -49,14 +49,21 @@ User.init(
   },
   {
     hooks: {
-      async beforeCreate(UserData) {
-        return bcrypt.hash(UserData.password, 10).then(newUserData => {
-          return newUserData
-        });
-      }
-    }
-  },
-  {
+      // you hash the password field before you create the table
+      async beforeCreate(newUserData) {
+        newUserData.password = await bcrypt.hash(newUserData.password, 10);
+        return newUserData;
+      },
+      // you hash the password field when you update the table
+      async beforeUpdate(updatedUserData) {
+        updatedUserData.password = await bcrypt.hash(
+          updatedUserData.password,
+          10
+        );
+        return updatedUserData;
+      },
+    },
+    
     // Table configuration options go here
     sequelize,
     // passes in the imported sequelize connection (the direct connection to our database) which in this case is sequelize
