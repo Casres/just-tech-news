@@ -10,7 +10,22 @@ Vote.init(
             primaryKey: true,
             autoIncrement: true
         },
-        // other records (rows)
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            References: {
+                Model: 'user',
+                key: 'id'
+            }
+        },
+        post_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'post',
+                key: 'id'
+            }
+        }
     },
     {
         sequelize,
