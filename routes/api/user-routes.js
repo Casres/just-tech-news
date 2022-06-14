@@ -5,6 +5,7 @@ const { User, Post, Vote } = require("../../models");
 router.get("/", (req, res) => {
   User.findAll({
     attributes: { exclude: ["password"] },
+    order: [["id", "DESC"]],
   })
     .then((dbUserData) => res.json(dbUserData))
     .catch((err) => {
@@ -16,7 +17,7 @@ router.get("/", (req, res) => {
 // GETs /api/user/1
 router.get("/:id", (req, res) => {
   User.findOne({
-    attributes: { exclude: ['password'] },
+    attributes: { exclude: ["password"] },
     where: {
       id: req.params.id,
     },
@@ -24,16 +25,16 @@ router.get("/:id", (req, res) => {
       // gives your the posts from user
       {
         model: Post,
-        attributes: ['id', 'title', 'post_url', 'created_at']
+        attributes: ["id", "title", "post_url", "created_at"],
       },
       // gives you the voted posts
       {
         model: Post,
-        attributes: ['title'],
+        attributes: ["title"],
         through: Vote,
-        as: 'voted_posts'
-      }
-    ]
+        as: "voted_posts",
+      },
+    ],
   })
     .then((dbUserData) => {
       if (!dbUserData) {
