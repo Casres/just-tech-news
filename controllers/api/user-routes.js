@@ -24,33 +24,28 @@ router.get("/:id", (req, res) => {
     include: [
       {
         model: Post,
-        attributes: [
-          "id",
-          "post_url",
-          "title",
-          "created_at",
-        ]
+        attributes: ["id", "post_url", "title", "created_at"],
       },
       // the comment module
       {
         model: Comment,
         attributes: [
-          'id',
-          'comment_text',
+          "id",
+          "comment_text",
           // 'created_at',
         ],
         include: {
           model: Post,
-          attributes: ['title']
-        }
+          attributes: ["title"],
+        },
       },
       {
         model: Post,
-        attributes: ['title'],
+        attributes: ["title"],
         through: Vote,
-        as: 'voted_posts'
-      }
-    ]
+        as: "voted_posts",
+      },
+    ],
   })
     .then((dbUserData) => {
       if (!dbUserData) {
@@ -81,11 +76,24 @@ router.post("/login", (req, res) => {
       res.status(400).json({ message: "Incorrect password" });
       return;
     }
-    res.json({
-      user: dbUserData,
-      message: "Logged In",
+    req.session.save(() => {
+      // declares session variables
+      req.session.user_id = dbUserData.id;
+      req.session.username = dbUserData.username;
+      req.session.loggedIn = true;
+      res.json({ user: dbUserData, message: "Logged In" });
     });
   });
+});
+
+router.post("/logout", (req, res) => {
+  if (req.session.loggedIn) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
 });
 
 // to create a user
@@ -95,7 +103,14 @@ router.post("/", (req, res) => {
     email: req.body.email,
     password: req.body.password,
   })
-    .then((dbUserData) => res.json(dbUserData))
+    .then((dbUserData) => {
+      req.session.save(() => {
+        req.session.user_id = dbUserData.id;
+        req.session.username = dbUserData.username;
+        req.session.loggedIn = true;
+        res.json(dbUserData);
+      });
+    })
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
