@@ -101,16 +101,20 @@ router.post("/", (req, res) => {
       res.status(500).json(err);
     });
 });
-
+// upvotes on a post
 router.put("/upvote", (req, res) => {
-  Post.upvote(req.body, { Vote })
-    .then((updatedPostData) => res.json(updatedPostData))
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
-    });
+  // making sure that the session exists
+  if (req.session) {
+    // passes the session id along with all the destructured properties on req.body
+    Post.upvote({...req.body, user_id: req.session.user_id}, { Vote, Comment, User })
+      .then((updatedPostData) => res.json(updatedPostData))
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  }
 });
-
+// updates post
 router.put("/:id", (req, res) => {
   Post.update(
     {
@@ -139,7 +143,7 @@ router.put("/:id", (req, res) => {
       res.status(500).json(err);
     });
 });
-
+// deletes a post
 router.delete("/:id", (req, res) => {
   Post.destroy({
     where: {
