@@ -60,7 +60,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// POSTs /api/users
+// creates log in session
 router.post("/login", (req, res) => {
   User.findOne({
     where: {
@@ -85,7 +85,7 @@ router.post("/login", (req, res) => {
     });
   });
 });
-
+// destroys log in session
 router.post("/logout", (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
