@@ -1,6 +1,8 @@
 const router = require("express").Router();
+const session = require("express-session");
 const { Comment, Post } = require("../../models");
 
+// gets ALL posts
 router.get("/", (req, res) => {
   Comment.findAll({
     attributes: ["id", "comment_text", "user_id", "post_id"],
@@ -11,7 +13,7 @@ router.get("/", (req, res) => {
       req.status(500).json(err);
     });
 });
-
+// gets a post by id
 router.get("/:id", (req, res) => {
   Comment.findOne({
     where: {
@@ -36,20 +38,21 @@ router.get("/:id", (req, res) => {
       res.status(500).json(err);
     });
 });
-
+// creates a post
 router.post("/", (req, res) => {
-  Comment.create({
-    comment_text: req.body.comment_text,
-    user_id: req.body.user_id,
-    post_id: req.body.post_id,
-  })
-    .then((dbCommentsData) => res.json(dbCommentsData))
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json(err);
-    });
+  if (req.session) {
+    Comment.create({
+      comment_text: req.body.comment_text,
+      post_id: req.body.post_id,
+      user_id: req.session.user_id
+    })
+      .then((dbCommentsData) => res.json(dbCommentsData))
+      .catch((err) => {
+        console.log(err);
+        res.status(400).json(err);
+      });
+  }
 });
-
 // USE THIS UPDATER
 router.put("/:id", (req, res) => {
   Comment.update(req.body, {
@@ -70,7 +73,7 @@ router.put("/:id", (req, res) => {
       res.status(500).json(err);
     });
 });
-
+// deletes a comment by id
 router.delete("/:id", (req, res) => {
   Comment.destroy({
     where: {
