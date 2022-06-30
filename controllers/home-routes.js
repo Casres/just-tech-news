@@ -51,7 +51,6 @@ router.get("/login", (req, res) => {
   }
   res.render("login");
 });
-
 // renders the sing-post page
 router.get("/post/:id", (req, res) => {
   Post.findOne({
@@ -77,30 +76,33 @@ router.get("/post/:id", (req, res) => {
         include: {
           model: User,
           attributes: ["username"],
-        }
+        },
       },
       {
         model: User,
-        attributes: ['username']
+        attributes: ["username"],
+      },
+    ],
+  })
+    .then((dbPostData) => {
+      if (!dbPostData) {
+        res.status(404).json({ message: "No post found with this id" });
+        return;
       }
-    ]
-  })
-  .then(dbPostData => {
-    if (!dbPostData) {
-      res.status(404).json({ message: 'No post found with this id' });
-      return;
-    }
 
-    // serializes the data
-    const post = dbPostData.get({ plain: true });
+      // serializes the data
+      const post = dbPostData.get({ plain: true });
 
-    // pass data to template
-    res.render('single-post', { post });
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json(err);
-  });
+      // pass data to template
+      res.render("single-post", {
+        post,
+        loggedIn: req.session.loggedIn,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 module.exports = router;
