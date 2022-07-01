@@ -7,7 +7,7 @@ test("format_date() returns a date string", () => {
 });
 
 test("format_plural() returns tigers", () => {
-  const inputTest = new Input("Tiger", 2);
+  const inputTest = new inputTest("Tiger", 2);
 
   expect(format_plural(inputTest).toBe("tigers"));
 });
