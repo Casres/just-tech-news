@@ -54,7 +54,7 @@ router.get("/login", (req, res) => {
   }
   res.render("login");
 });
-// renders the sing-post page
+// renders the single-post page
 router.get("/post/:id", (req, res) => {
   Post.findOne({
     where: {
