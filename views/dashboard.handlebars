@@ -1,3 +1,4 @@
+
 <section>
     <h2>Create a post</h2>
 
@@ -13,3 +14,18 @@
         <button type="submit" class="btn">Create</button>
     </form>
 </section>
+
+{{#if post.length}}
+<section>
+    <h2>Your Posts</h2>
+    <ol>
+        {{#each posts as |post|}}
+        <li>
+            {{> post-info post}}
+            <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
+        </li>
+        {{/each}}
+    </ol>
+</section>
+{{/if}}
+
