@@ -1,9 +1,12 @@
+// gets the date, plural and url formats
+const helpers = require("./utils/helpers");
+
 // for the css
 const path = require("path");
 
 // for the handlebars
 const exphbs = require("express-handlebars");
-const hbs = exphbs.create({});
+const hbs = exphbs.create({ helpers });
 
 // for the endpoints
 const express = require("express");
@@ -16,7 +19,7 @@ const PORT = process.env.PORT || 3001;
 
 // makes a session (a cookie) from the server (express)
 const session = require("express-session");
-// 
+//
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const sess = {
@@ -26,7 +29,7 @@ const sess = {
   saveUninitialized: true,
   store: new SequelizeStore({
     db: sequelize,
-  })
+  }),
 };
 
 app.use(session(sess));
