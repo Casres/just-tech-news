@@ -62,7 +62,7 @@ router.get("/:id", (req, res) => {
 });
 
 // creates log in session
-router.post("/login", withAuth, (req, res) => {
+router.post("/login", (req, res) => {
   User.findOne({
     where: {
       email: req.body.email,
