@@ -32,5 +32,5 @@ async function commentClickHandler(event) {
 }
 
 document
-  .querySelector(".comment-btn")
+  .querySelector(".comments")
   .addEventListener("click", commentClickHandler);
