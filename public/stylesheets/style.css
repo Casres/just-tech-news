@@ -1,3 +1,8 @@
+:root {
+    --orange: #FE6F27;
+    --orangeHover: #225ca3;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -8,22 +13,23 @@ html {
     padding: 0;
     margin: 0;
     font-family: sans-serif;
-    color: #333;
+    color: #ffffff;
+    background-color: #2F2F2F
 }
 
 a {
     text-decoration: none;
-    color: #225ca3;
+    color: var(--orange);
     font-weight: bold;
     transition: color .1s;
 }
 
 a:hover {
-    color: #3486eb;
+    color: var(--orangeHover);
 }
 
 button {
-    background-color: #225ca3;
+    background-color: var(--orange);
     border: 0;
     padding: 1%;
     color: white;
@@ -34,12 +40,18 @@ button {
 }
 
 button:hover {
-    background-color: #3486eb;
+    background-color: #143d59;
 }
 
 .post-list {
     margin: 0;
     padding: 0;
+    
+}
+
+.post-item {
+    margin: 1rem 0 4rem 0;
+    /* border: #90aed3 solid 0.25rem; */
 }
 
 textarea,
@@ -52,7 +64,7 @@ input {
 textarea:focus,
 input:focus {
     outline: none;
-    border: 1px solid #3486eb;
+    border: 1px solid var(--orange);
 }
 
 textarea {
@@ -77,16 +89,39 @@ form label {
     flex-direction: column;
 }
 
+.jumbo-tron {
+    background-color: #1f9c13;
+    width: 100vw;
+    float: left;
+}
+
 header {
-    border-bottom: 1px solid #ccc;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1%;
+    padding: 30 0rem;
 }
 
 header h1 {
     font-size: 1em;
+}
+
+.nav-items {
+    padding-right: 2rem;
+}
+
+#title-container {
+    margin: 0;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #ccc;
+}
+
+#title {
+    background-color: #222121;
+    border-radius: 0.75rem;
+    /* top right bottom left */
+    padding: 0.55rem 0.75rem 0.55rem 0.75rem; 
+    box-shadow: 7px 4.75px 18px -3px #FE6F27;
 }
 
 main {
@@ -100,16 +135,16 @@ main {
     padding: 0;
     cursor: pointer;
     text-decoration: none;
-    color: #225ca3;
+    color: var(--orange);
     font-size: 100%;
     font-weight: bold;
     transition: color .1s;
-    margin-left: 16px;
+    /* margin-left: 16px; */
 }
 
 .btn-no-style:hover {
     background: none;
-    color: #3486eb;
+    color: var(--orangeHover);
 }
 
 .delete-post-btn {
@@ -155,7 +190,7 @@ main {
 }
 
 .comment:nth-child(odd) {
-    background-color: #fff5eb;
+    background-color: #d09a65;
 }
 
 .comment .meta {

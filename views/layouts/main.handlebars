@@ -3,30 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Just Tech News</title>
+    <title> Tech Blog </title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
 
   <body>
     <div class="wrapper">
+      <div class="jumbo-tron">
       <header>
-        <h1>
-          <a href="/">Just Tech News</a>
-        </h1>
         <nav>
+          <a href="/" class="nav-items">Home</a>
           {{#if loggedIn}}
-            <a href="/dashboard">Dashboard</a>
-            <button id="logout" class="btn-no-style">logout</button>
+            <a href="/dashboard" class="nav-items">Dashboard</a>
+            <button id="logout" class="btn-no-style nav-items">logout</button>
           {{else}}
             <a href="/login">login</a>
           {{/if}}
         </nav>
       </header>
+          <h1 id="title-container">
+            <a href="/" id="title">Tech Blog</a>
+          </h1>
+      </div>
       <main>
         {{{body}}}
       </main>
       <footer>
-        Thanks for visiting!
       </footer>
     </div>
     {{#if loggedIn}}
